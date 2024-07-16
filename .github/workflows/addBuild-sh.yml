@@ -1,8 +1,7 @@
 name: Add build.sh to All Branches
 
 on:
-  issues:
-    types: [opened, edited, milestoned]
+  create
 
 jobs:
   add-build-sh:
