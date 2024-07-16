@@ -1,7 +1,7 @@
 name: Add build.sh to All Branches
 
 on:
-  deployment
+  issue_comment
 
 jobs:
   add-build-sh:
