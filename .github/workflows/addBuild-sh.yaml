@@ -1,0 +1,33 @@
+name: Add build.sh to All Branches
+
+on:
+  workflow_dispatch:
+
+jobs:
+  add-build-sh:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Get all branches
+      id: get-branches
+      run: |
+        branches=$(git for-each-ref --format='%(refname:short)' refs/heads/)
+        echo "::set-output name=branches::${branches}"
+
+    - name: Add build.sh to all branches
+      run: |
+        FILE_TO_ADD="build.sh"
+        COMMIT_MESSAGE="Add build.sh to all branches"
+        
+        for branch in ${{ steps.get-branches.outputs.branches }}; do
+          git checkout $branch
+          cp $GITHUB_WORKSPACE/$FILE_TO_ADD .
+          git add $FILE_TO_ADD
+          git commit -m "$COMMIT_MESSAGE"
+          git push origin $branch
+        done
