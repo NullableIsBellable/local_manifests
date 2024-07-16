@@ -1,7 +1,7 @@
 name: Add build.sh to All Branches
 
 on:
-  workflow_dispatch
+  deployment
 
 jobs:
   add-build-sh:
